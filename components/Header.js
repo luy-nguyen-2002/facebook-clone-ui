@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import React from "react";
 import { IoIosSearch } from "react-icons/io";
@@ -10,8 +11,10 @@ import { CgMenuGridO } from "react-icons/cg";
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { FaBell } from "react-icons/fa6";
 import { FaChevronDown } from "react-icons/fa";
+import { signOut, useSession } from "next-auth/react";
 
 const Header = () => {
+  const { data: session } = useSession();
   return (
     <div className="bg-white flex items-center p-2 shadow-md top-0 sticky z-50 h-16">
       <div className="flex min-w-fit">
@@ -53,20 +56,34 @@ const Header = () => {
         </div>
       </div>
 
-
       <div className="flex items-center justify-end min-w-fit space-x-2">
-      <Image
-          className="rounded-full"
+        <Image
+          onClick={signOut}
+          className="rounded-full cursor-pointer"
           alt="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Facebook_logo_36x36.svg/1200px-Facebook_logo_36x36.svg.png"
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Facebook_logo_36x36.svg/1200px-Facebook_logo_36x36.svg.png"
+          src={session?.user.image}
           width={30}
           height={30}
         />
-        <p className="hidden xl:inline-flex font-semibold text-sm whitespace-nowrap p-3 max-w-xs">Luy Nguyen</p>
-        <CgMenuGridO size={20} className="hidden lg:inline-flex h-10 w-10 bg-gray-200 text-gray-600 rounded-full p-2 cursor-pointer hover:bg-gray-300"/>
-        <IoChatbubbleEllipsesOutline size={20} className="hidden lg:inline-flex h-10 w-10 bg-gray-200 text-gray-600 rounded-full p-2 cursor-pointer hover:bg-gray-300"/>
-        <FaBell size={20} className="hidden lg:inline-flex h-10 w-10 bg-gray-200 text-gray-600 rounded-full p-2 cursor-pointer hover:bg-gray-300"/>
-        <FaChevronDown size={20} className="hidden lg:inline-flex h-10 w-10 bg-gray-200 text-gray-600 rounded-full p-2 cursor-pointer hover:bg-gray-300"/>
+        <p className="hidden xl:inline-flex font-semibold text-sm whitespace-nowrap p-3 max-w-xs">
+          {session?.user.name}
+        </p>
+        <CgMenuGridO
+          size={20}
+          className="hidden lg:inline-flex h-10 w-10 bg-gray-200 text-gray-600 rounded-full p-2 cursor-pointer hover:bg-gray-300"
+        />
+        <IoChatbubbleEllipsesOutline
+          size={20}
+          className="hidden lg:inline-flex h-10 w-10 bg-gray-200 text-gray-600 rounded-full p-2 cursor-pointer hover:bg-gray-300"
+        />
+        <FaBell
+          size={20}
+          className="hidden lg:inline-flex h-10 w-10 bg-gray-200 text-gray-600 rounded-full p-2 cursor-pointer hover:bg-gray-300"
+        />
+        <FaChevronDown
+          size={20}
+          className="hidden lg:inline-flex h-10 w-10 bg-gray-200 text-gray-600 rounded-full p-2 cursor-pointer hover:bg-gray-300"
+        />
       </div>
     </div>
   );
